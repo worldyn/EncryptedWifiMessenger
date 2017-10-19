@@ -7,6 +7,8 @@
 
    For copyright and licensing, see file COPYING */
 
+#include <stdint.h>
+
 /* Declare display-related functions from mipslabfunc.c */
 void display_image(int x, const uint8_t *data);
 void display_init(void);
@@ -53,3 +55,13 @@ void time2string( char *, int );
 int getbtns(void);
 int getsw(void);
 void enable_interrupt(void);
+
+/* Declare I2C helper functions */
+/*void i2c_idle();
+bool i2c_send(uint8_t data);
+uint8_t i2c_recv();
+void i2c_ack();
+void i2c_nack();
+void i2c_start();
+void i2c_restart();
+void i2c_stop();*/

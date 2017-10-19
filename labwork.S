@@ -24,42 +24,42 @@
   #
 
 enable_interrupt:
-  ei 
+  ei
   jr $ra
   nop
 
 # delay the program
 # argument: $a0, number of milliseconds to delay
-delay:
-    # preserve $s0
-    addi $sp, $sp, -4
-    sw $s0, 0($sp)
-
-    MilliSec:
-        ble $a0, $zero, EndMilliSec
-        nop
-        
-        addi $a0, $a0, -1
-        move $s0, $zero
-        Loop:
-            li $t0, 3400 # delay constant
-            ble $t0, $s0, EndLoop
-            nop
-            addi $s0, $s0, 1
-            j Loop
-            nop
-        EndLoop:
-            j MilliSec
-            nop
-    EndMilliSec:
-
-    # restore $s0
-    lw $s0, 0($sp)
-    addi $sp, $sp, 4
-
-    jr $ra
-    nop
-
+#delay:
+#    # preserve $s0
+#    addi $sp, $sp, -4
+#    sw $s0, 0($sp)
+#
+#    MilliSec:
+#        ble $a0, $zero, EndMilliSec
+#        nop
+#
+#        addi $a0, $a0, -1
+#        move $s0, $zero
+#        Loop:
+#            li $t0, 3400 # delay constant
+#            ble $t0, $s0, EndLoop
+#            nop
+#            addi $s0, $s0, 1
+#            j Loop
+#            nop
+#        EndLoop:
+#            j MilliSec
+#            nop
+#    EndMilliSec:
+#
+#    # restore $s0
+#    lw $s0, 0($sp)
+#    addi $sp, $sp, 4
+#
+#    jr $ra
+#    nop
+#
 
 # time to string representation
 # params:
@@ -73,7 +73,7 @@ time2string:
     # s0 is used for saving memeory adress in $a0
     # s1 is used for saving return adress since hexasc is called
     addi $sp, $sp, -12
-    
+
     sw $s0, 8($sp)
     sw $s1, 4($sp)
     sw $s2, 0($sp)
@@ -82,16 +82,16 @@ time2string:
     # when calling hexasc
     move $s0, $a0
     move $s1, $ra
-    
+
     # save $a1 since it cant be guaranteed after a function call
     move $s2, $a1
-    
+
     # go to branch ding on new minutes (xx:00)
     move $t5, $s2
-    andi $t5, $t5, 0x000000FF 
+    andi $t5, $t5, 0x000000FF
     beq $t5, $zero, ding
     nop
-    
+
     # shift all the minutes and seconds
     # to numbers that can be arguments for hexasc
 
@@ -138,25 +138,25 @@ time2string:
 
     jr $ra
     nop
-    
+
     ding:
     	# write DING in ascii to memory address in $a1
     	li $t0,0x00000044  # D
     	sb $t0, 0($s0)
-    	
+
     	li $t0,0x00000049  # D
     	sb $t0, 1($s0)
-    	
+
     	li $t0,0x0000004E  # N
     	sb $t0, 2($s0)
-    	
+
     	li $t0,0x00000047  # G
     	sb $t0, 3($s0)
 
     	# store null byte
     	li $t0, 0x00
     	sb $t0, 4($s0)
-    
+
     	# get the correct return adress
     	move $ra, $s1
 
@@ -178,13 +178,13 @@ hexasc:
     li $t0, 0xA
     ble $t0, $a0, L1
     nop
-    
+
     # A 0-9 number to ASCII digit 0-9
     addi $v0, $a0, 0x30
-    
+
     # only 7 bits should be returned, rest should be zeroes
     andi $v0, $v0, 0x0000007F
-    
+
     j end
     nop
 
@@ -196,5 +196,3 @@ hexasc:
     end:
         jr $ra
         nop
-
-
