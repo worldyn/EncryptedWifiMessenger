@@ -8,6 +8,8 @@
    For copyright and licensing, see file COPYING */
 
 /* Declare display-related functions from mipslabfunc.c */
+#include <stdint.h>
+
 void display_image(int x, const uint8_t *data);
 void display_init(void);
 void display_string(int line, char *s);
