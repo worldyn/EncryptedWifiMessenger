@@ -91,7 +91,7 @@ the nonce v is 8 bytes,
 
 }*/
 
-void bytes_to_word(uint32* word, byte bytes[]) {
+void bytes_to_word(uint32* word, const byte bytes[]) {
   *word = 0;
   *word |= (uint32)(bytes[0]) << 0;
   *word |= (uint32)(bytes[1]) << 8;
@@ -99,7 +99,7 @@ void bytes_to_word(uint32* word, byte bytes[]) {
   *word |= (uint32)(bytes[3]) << 24;
 }
 
-void chacha20_expand(uint32* matrix, const byte* nonce, const byte* key) {
+void chacha20_expand_init(uint32* matrix, const byte nonce[], const byte key[]) {
   // Constants, byte 0-3
   // consts is "expand 32-byte k" in ascii to hex
   matrix[0] = 0x61707865;
@@ -107,24 +107,27 @@ void chacha20_expand(uint32* matrix, const byte* nonce, const byte* key) {
   matrix[2] = 0x79622D32; 
   matrix[3] = 0x6B206574;
   // Key, byte 4-11
-  bytes_to_word(&matrix[4], key);
-  bytes_to_word(&matrix[5], key + 4);
-  bytes_to_word(&matrix[6], key + 8);
-  bytes_to_word(&matrix[7], key + 12);
-  bytes_to_word(&matrix[8], key + 16);
-  bytes_to_word(&matrix[9], key + 20);
-  bytes_to_word(&matrix[10], key + 24);
-  bytes_to_word(&matrix[11], key + 28);
+  bytes_to_word(&matrix[4], &key[0]);
+  bytes_to_word(&matrix[5], &key[4]);
+  bytes_to_word(&matrix[6], &key[8]);
+  bytes_to_word(&matrix[7], &key[12]);
+  bytes_to_word(&matrix[8], &key[16]);
+  bytes_to_word(&matrix[9], &key[20]);
+  bytes_to_word(&matrix[10], &key[24]);
+  bytes_to_word(&matrix[11], &key[28]);
   // Counter, byte 12-13
   matrix[12] = 0; 
   matrix[13] = 0;
   // Nonce, bytes, 14-15
-  bytes_to_word(&matrix[14], nonce); 
-  bytes_to_word(&matrix[15], nonce + 4);
+  bytes_to_word(&matrix[14], &nonce[0]); 
+  bytes_to_word(&matrix[15], &nonce[4]);
 }
 
-//void chacha20_hash_test() {
-//  uint in[16] = {
-//  
-//  };
-//}
+void chacha_reset_matrix(uint32* matrix) {
+  byte i;
+  for(i = 0; i < 16; ++i) {
+    matrix[i] = 0;
+  }
+}
+
+
