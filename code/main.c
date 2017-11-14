@@ -51,7 +51,20 @@ void inputinit(void) {
 	/* Turn on ADC */
 	AD1CON1 |= (0x1 << 15);
 
-	return 0;
+
+  // Set AD1IF to 0.
+  IFS(1) &= 2;
+  // Enable bit 1 of IEC1 (AD1IE).
+  IEC(1) |= 1 << 1;
+  // Enable all three AD1IP (bits 26-28) and all two AD1IS (bits 24-25)
+  // for MAXIMUM prio and sub prio.
+  //IPC(6) |= 0x1F000000;
+  IPC(6) |= 0x0F000000;
+
+  // Set done to 0.
+  AD1CON1 &= ~1;
+  // Set sample to 1.
+  AD1CON1 |= 2;
 }
 
 void work(void) {
