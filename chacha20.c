@@ -62,34 +62,6 @@ void chacha20_hash(const uint32 in[16], uint32 out[16]) {
   }
 }
 
-/*
-Encryption function
-the key k is 64 bytes,
-the nonce v is 8 bytes,
-
-*/
-/*void chacha20_enc(const uint32 k[16]) {
-
-}*/
-
-/*
- Chacha20 encryption
-*/
-/*void encrypt(uint32 out[64], const uint32 in[16]) {
-  uint32 mat[16];
-  int i;
-
-  // copy input to matrix
-  for (i = 0; i < 16; ++i) { 
-    mat[i] = in[i];
-  }
-
-  for (i = 0; i < ROUNDS; ++i) {
-    doubleround(mat);
-  }
-
-
-}*/
 
 void bytes_to_word(uint32* word, const byte bytes[]) {
   *word = 0;
@@ -130,4 +102,55 @@ void chacha_reset_matrix(uint32* matrix) {
   }
 }
 
+void chacha_inc_matrix_counter(uint32* matrix) {
+  matrix[12] = matrix[12] + 1;
+  if (matrix[12] == 0) {
+    matrix[13] = matrix[13] + 1;
+  }
+}
 
+/*
+Encryption function
+encrypt and decrypt is same operation
+in = message or ciphertext,
+matrix = chacha20 block/matrix
+
+Assumes that matrix has been initialized first with key and nonce!!!!
+*/
+void chacha20_enc(uint32 matrix[], const byte in[], uint32 len, byte out[]) {
+  if(len == 0) {
+    return;
+  }
+  
+  uint32 i;
+  uint32 j;
+
+  // Size is rounded up to nearest 64 multiple of len
+  // To get 64 bytes per hashed matrix
+  uint32 buf_size = ((len + 32) >> 6) << 6;
+  
+  byte buffer[buf_size];
+    
+  for(i = 0; i < buf_size; i+=64) {
+    // Perform chacha20 on current matrix
+    // Output will be in buffer byte array
+    // the 64 bytes written to it
+    chacha20_hash(&matrix, &buffer[i]);
+    
+    // Increment counter in matrix
+    matrix[12] = matrix[12] + 1;
+    // if overflow then add one to most significant bytes of counter
+    if(matrix[12] == 0) {
+      matrix[13] = matrix[13] + 1;
+    }
+  }
+  
+  // The XOR part as described in algo specification
+  for(i = 0; i < len; ++i) {
+    out[i] = in[i] ^ buffer[i]; 
+  }
+
+  // Reset counter
+  matrix[12] = 0;
+  matrix[13] = 0;
+}
