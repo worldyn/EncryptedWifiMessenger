@@ -1,0 +1,2 @@
+chacha20.c.o: chacha20.c
+chacha20.c :
