@@ -1,0 +1,2 @@
+word_multiplication.S.o: word_multiplication.S
+word_multiplication.S :

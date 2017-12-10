@@ -1,22 +1,24 @@
-chacha20.c.o: chacha20.c \
+dh.c.o: dh.c \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdio.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/klibc/extern.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/klibc/inline.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdarg.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stddef.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/string.h \
- machine_defs.h \
+ dh.h bigu.h machine_defs.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdint.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h \
- chacha20.h
-chacha20.c :
+ dh-params.h \
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/pic32mx.h
+dh.c :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdio.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/klibc/extern.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/klibc/inline.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdarg.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stddef.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/string.h :
- machine_defs.h :
+ dh.h bigu.h machine_defs.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdint.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h :
- chacha20.h :
+ dh-params.h :
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/pic32mx.h :

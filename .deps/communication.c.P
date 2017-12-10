@@ -1,22 +1,26 @@
-chacha20.c.o: chacha20.c \
+communication.c.o: communication.c \
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/pic32mx.h \
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdint.h \
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h \
+ communication.h settings.h crash.h chacha20.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdio.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/klibc/extern.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/klibc/inline.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdarg.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stddef.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/string.h \
- machine_defs.h \
- /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdint.h \
- /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h \
- chacha20.h
-chacha20.c :
+ machine_defs.h dh.h bigu.h dh-params.h \
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdbool.h
+communication.c :
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/pic32mx.h :
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdint.h :
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h :
+ communication.h settings.h crash.h chacha20.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdio.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/klibc/extern.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/klibc/inline.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdarg.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stddef.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/string.h :
- machine_defs.h :
- /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdint.h :
- /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h :
- chacha20.h :
+ machine_defs.h dh.h bigu.h dh-params.h :
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdbool.h :
