@@ -1,0 +1,2 @@
+test_chacha20_2.c.o: test_chacha20_2.c
+test_chacha20_2.c :

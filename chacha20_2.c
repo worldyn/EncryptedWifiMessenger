@@ -1,3 +1,4 @@
+/*
 #include <stdint.h>
 #include "chacha20.h"
 #define ROUNDS 10
@@ -38,10 +39,9 @@ void doubleround(uint32 mat[]) {
   diagonalround(mat);
 }
 
-/*
-Hash function
-in and out is 64 bytes
-*/
+
+//Hash function
+//in and out is 64 bytes
 void chacha20_hash(const uint32 in[16], uint32 out[16]) {
   uint32 mat[16];
   
@@ -109,14 +109,14 @@ void chacha_inc_matrix_counter(uint32* matrix) {
   }
 }
 
-/*
-Encryption function
-encrypt and decrypt is same operation
-in = message or ciphertext,
-matrix = chacha20 block/matrix
 
-Assumes that matrix has been initialized first with key and nonce!!!!
-*/
+//Encryption function
+//encrypt and decrypt is same operation
+//in = message or ciphertext,
+//matrix = chacha20 block/matrix
+//
+//Assumes that matrix has been initialized first with key and nonce!!!!
+
 void chacha20_enc(uint32 matrix[], const byte in[], uint32 len, byte out[]) {
   if(len == 0) {
     return;
@@ -154,3 +154,4 @@ void chacha20_enc(uint32 matrix[], const byte in[], uint32 len, byte out[]) {
   matrix[12] = 0;
   matrix[13] = 0;
 }
+*/
