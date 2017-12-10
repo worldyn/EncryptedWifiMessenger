@@ -1,4 +1,4 @@
-chacha20.c.o: chacha20.c \
+spoch.c.o: spoch.c chacha20.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdio.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/klibc/extern.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/klibc/inline.h \
@@ -7,9 +7,8 @@ chacha20.c.o: chacha20.c \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/string.h \
  machine_defs.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdint.h \
- /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h \
- chacha20.h
-chacha20.c :
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h
+spoch.c chacha20.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdio.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/klibc/extern.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/klibc/inline.h :
@@ -19,4 +18,3 @@ chacha20.c :
  machine_defs.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdint.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h :
- chacha20.h :

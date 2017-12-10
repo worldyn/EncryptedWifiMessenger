@@ -1,0 +1,6 @@
+dh-params.c.o: dh-params.c dh-params.h bigu.h machine_defs.h \
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdint.h \
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h
+dh-params.c dh-params.h bigu.h machine_defs.h :
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdint.h :
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h :
