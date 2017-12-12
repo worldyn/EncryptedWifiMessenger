@@ -1,6 +1,6 @@
 #ifndef MACHINE_DEFS_H
 #define MACHINE_DEFS_H
-
+// Borrowed from Olle
 // Put all machine dependent defintions in this file. The only difference
 // between code working on x64 linux and on ChipKit Uno32 should be the
 // definitions in this file.

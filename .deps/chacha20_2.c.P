@@ -1,2 +1,8 @@
-chacha20_2.c.o: chacha20_2.c
-chacha20_2.c :
+chacha20_2.c.o: chacha20_2.c chacha20_2.h \
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdint.h \
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h \
+ crash.h machine_defs.h
+chacha20_2.c chacha20_2.h :
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdint.h :
+ /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h :
+ crash.h machine_defs.h :

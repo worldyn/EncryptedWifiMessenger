@@ -31,3 +31,33 @@ void crash(char* msg0, char* msg1, char* msg2, char* msg3)
   }
 }
 
+// Grabs the least sig 4 bits of passed byte and returns hex code.
+char nibble_to_hex(u8 nibble)
+{
+  nibble &= 0x0F;
+  if (nibble < 10) {
+    return '0' + nibble;
+  }
+
+  return 'A' + (nibble-10);
+}
+
+// Prints up to the first 8 bytes of the passed array bytes to the first line.
+void print_buffer_start(u8 line, u8 bytes[], u8 len) {
+  len = (len == 0) || (len > 8) ? 8 : len;
+  char str[17]; // 8 bytes = 16 hex digits + null term.
+  str[16] = 0;
+
+  u8 i;
+  char c;
+  for (i = 0; i < len; ++i) {
+    c = nibble_to_hex(bytes[i] >> 4);
+    str[i*2] = c;
+    c = nibble_to_hex(bytes[i]);
+    str[i*2 + 1] = c;
+  }
+
+  display_string(line, str);
+}
+
+
