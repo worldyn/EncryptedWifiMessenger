@@ -25,6 +25,7 @@ void recv_nonce_and_key();
 void gen_shared();
 void gen_keys();
 void confirm_shared_secret();
+void chacha20_confirmation();
 #endif // COMMUNICATION_H__
 
 

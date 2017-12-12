@@ -1,11 +1,21 @@
-/*
-typedef unsigned char byte;
-typedef uint32_t uint32;
+#include <stdint.h>
+// Implemented via salsa20 speci. with chacha20 spec:
+// https://cr.yp.to/snuffle/spec.pdf
+// https://cr.yp.to/chacha/chacha-20080128.pdf
+typedef struct {
+  uint32_t matrix[16];
+} ChaChaCtx;
 
-void quarterround(uint32 a, uint32 b, uint32 c, uint32 d);
-void columnround(uint32 mat[]);
-void diagonalround(uint32 mat[]);
-void doubleround(uint32 mat[]);
-void chacha20_hash(const uint32 in[16], uint32 out[16]);
-// void chacha20_enc();
-*/
+void chacha20_hash(const ChaChaCtx* ctx, ChaChaCtx* out);
+void chacha20_expand_init(ChaChaCtx* ctx, const uint8_t nonce[],
+  const uint8_t key[]);
+void chacha20_enc(ChaChaCtx* ctx, const uint8_t in[], uint32_t len,
+  uint8_t out[]);
+
+void bytes_to_word(uint32_t* word, const uint8_t bytes[]);
+void word_to_little_endian(uint32_t w, uint8_t a[4]);
+void chacha_get_nonce(const ChaChaCtx* ctx, uint8_t nonce[8]);
+void chacha_set_nonce(ChaChaCtx* ctx, const uint8_t nonce[]);
+void ctx_to_bytes(const ChaChaCtx* ctx, uint8_t bytes[]);
+void chacha_set_matrix_counter(ChaChaCtx* ctx, uint32_t cnt_most_sig, 
+  uint32_t cnt_least_sig);

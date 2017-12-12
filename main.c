@@ -163,6 +163,11 @@ int main(void) {
   display_string(0, "Generating");
   display_string(1, "key and nonce...");
   display_update();
+
+  // FREEZE FOR CHACHA20 CONFIRMATION
+  // chacha20_confirmation();
+  // END CONFIRMATION FREEZE
+
   gen_key_and_nonce();
 
   display_string(0,"Waiting for ");
@@ -188,6 +193,9 @@ int main(void) {
   display_update();
   gen_shared();
   gen_keys(); 
+  // WILL FREEZE PROGRAM
+  //confirm_shared_secret();
+  // END FREEZE
 
   display_string(0, "Generating");
   display_string(1, "nonce for enc...");

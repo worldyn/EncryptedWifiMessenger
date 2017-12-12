@@ -1,6 +1,7 @@
 #ifndef BIGU_H__
 #define BIGU_H__
 
+// Borrowed from Olle
 #include "machine_defs.h"
 
 typedef u32 Limb;

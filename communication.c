@@ -3,7 +3,7 @@
 #include "communication.h"
 #include "settings.h"
 #include "crash.h"
-#include "chacha20.h"
+#include "chacha20_2.h"
 #include "dh.h"
 #include <stdbool.h>
 
@@ -137,6 +137,9 @@ const uint8_t cipher[len]) {
   for (i = 0; i < len; ++i) {
     uart_write(cipher[i]);
   } 
+  // FREEZE
+  //while(1);
+  // END FREEZE
 }
 
 
@@ -171,22 +174,24 @@ void test_show_envelope() {
 * Crypto stuff
 */
 
-// Example key
 ChaChaCtx ctx;
 
 // Keys that is actually
 uint8_t enc_key[32];
 uint8_t dec_key[32];
 
-const uint8_t hard_key[] ={
+/*const uint8_t hard_key[] ={
   0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,
   0x08,0x09,0x0a,0x0b,0x0c,0x0d,0x0e,0x0f,
   0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,
   0x18,0x19,0x1a,0x1b,0x1c,0x1d,0x1e,0x1f,
-};
+};*/
+
 // global nonce
 uint8_t nonce[8];
 
+/*uint8_t hard_nonce[8] = {0,0,0,0,0,0,0,0};
+*/
 // generate bascially random stuff
 void gen_random(uint16_t len, uint8_t* in) {
   uint8_t i;
@@ -215,17 +220,25 @@ void inc_nonce() {
 }
 
 
+void show_message(const uint8_t row, uint8_t message[]) {
+  display_string(row, message);
+  display_update();
+}
+
 // works both ways with encryped and decrypted
 // put whatever should be transformed in the in arg
 void enc(uint8_t in[], const uint32_t len, uint8_t out[], 
 const uint8_t non[8], const uint8_t key[32]) {
-  chacha_init(&ctx, key, non); 
+  chacha20_expand_init(&ctx, non, key); 
   /*uint8_t i;
   for (i = 0; i < 64; ++i) {
     PORTE =  
   }*/
   chacha20_enc(&ctx, in, len, out); 
+  //show_message(0,in);
+  //show_message(1,out);
 }
+
 
 void send_enc(const uint16_t len, uint8_t message[len]) {
   uint8_t cbuf[len];
@@ -261,13 +274,12 @@ uint8_t* recv_dec_message() {
   }
   // decrypt
   enc(env_cipher,len, mbuf, env_nonce, dec_key);
+  //FREEZE
+  //while(1);
+  // FREEZE END
   return mbuf;
 }
 
-void show_message(const uint8_t row, uint8_t message[]) {
-  display_string(row, message);
-  display_update();
-}
 
 /* 
 * DH and montgomery stuff
@@ -387,7 +399,7 @@ void gen_keys() {
   }
   spoch(appended, MSG_LEN, 32, dec_key);
 
-  //  CKB = spoch(32, append(NB, NA, SS))
+  //  CKB = spoch(32, append(NB, NA, SS)) 
   for (i = 0; i < 32; ++i) {
     appended[i] = my_nonce[i]; 
   }
@@ -398,46 +410,54 @@ void gen_keys() {
     appended[i] = shared_secret[i-64]; 
   }
   spoch(appended, MSG_LEN, 32, enc_key);
+  
 }
 
-/*
-// Grabs the least sig 4 bits of passed byte and returns hex code.
-char nibble_to_hex(u8 nibble)
-{
-  nibble &= 0x0F;
-  if (nibble < 10) {
-    return '0' + nibble;
-  }
-
-  return 'A' + (nibble-10);
-}
-
-// Prints up to the first 8 bytes of the passed array bytes to the first line.
-void print_buffer_start(u8 line, u8 bytes[], u8 len)
-{
-  len = (len == 0) || (len > 8) ? 8 : len;
-  char str[17]; // 8 bytes = 16 hex digits + null term.
-  str[16] = 0;
-
-  u8 i;
-  char c;
-  for (i = 0; i < len; ++i) {
-    c = nibble_to_hex(bytes[i] >> 4);
-    str[i*2] = c;
-    c = nibble_to_hex(bytes[i]);
-    str[i*2 + 1] = c;
-  }
-
-  display_string(line, str);
-}
 
 void confirm_shared_secret() {
-	display_string(0, "CKA,CKB,SS");
-	print_buffer_start(1, dec_key, 0);
-  print_buffer_start(2, enc_key, 0);
-  print_buffer_start(3, shared_secret, 0);
+	//display_string(0, "dec, enc, ss");
+  print_buffer_start(0, enc_key, 0);
+  print_buffer_start(1, enc_key+8, 0);
+  print_buffer_start(2, enc_key+16, 0);
+  print_buffer_start(3, enc_key+24, 0);
+  //print_buffer_start(2, enc_key, 0);
+  //print_buffer_start(3, shared_secret, 0);
   display_update();
   PORTE = 0x0F;
   while (1);
 }
-*/
+
+ChaChaCtx test_ctx;
+ChaChaCtx test_ctx_hash;
+  uint8_t test_key[] = {
+    0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,
+    0x08,0x09,0x0a,0x0b,0x0c,0x0d,0x0e,0x0f,
+    0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,
+    0x18,0x19,0x1a,0x1b,0x1c,0x1d,0x1e,0x1f,
+  };
+  uint8_t test_nonce[] = {
+    0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07
+  };
+
+uint8_t test_in[] = {
+  0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0
+};
+uint8_t test_out[32];
+void chacha20_confirmation() {
+  chacha20_expand_init(&test_ctx, test_nonce, test_key);
+  chacha20_enc(&test_ctx, test_in,32, test_out);
+
+	print_buffer_start(0, test_out, 0);
+  print_buffer_start(1, test_out+8, 0);
+  print_buffer_start(2, test_out+16, 0);
+  print_buffer_start(3, test_out+24, 0);
+  //print_buffer_start(1, (uint8_t*)(test_ctx.matrix) + 40, 0);
+  //print_buffer_start(2, (uint8_t*)(test_ctx.matrix) + 48, 0);
+  //print_buffer_start(3, (uint8_t*)(test_ctx.matrix) + 56, 0);
+  display_update();
+  PORTE = 0x0F;
+  while (1);
+}
